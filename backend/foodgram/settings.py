@@ -4,8 +4,8 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = ('django-insecure-8t-eknk)*ik*b#_4quyyuk7y5'
-              '(d-1k%z4)oh+qj&+&jkjture9')
+SECRET_KEY = os.getenv('SECRET_KEY',
+                       '0^f3531i#vl^asomxpv!rwy^7t&@qqu&8*p!8!0ub5$%p2!o2*')
 
 DEBUG = True
 
@@ -58,7 +58,7 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }

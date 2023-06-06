@@ -18,7 +18,7 @@ from .filters import AuthorAndTagFilter
 from .paginations import LimitPageNumberPagination
 from users.models import Subscribe
 from recipes.models import (Tag, Ingredient, Recipe,
-                            Favorite, ShoppingCart, RecipeIngredients)
+                            Favorite, ShoppingCart, RecipeIngredient)
 
 
 User = get_user_model()
@@ -47,11 +47,10 @@ class CustomUserViewSet(UserViewSet):
             Subscribe.objects.create(user=user, author=author)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        if request.method == 'DELETE':
-            the_subscribe = get_object_or_404(Subscribe, user=user,
-                                              author=author)
-            the_subscribe.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        the_subscribe = get_object_or_404(Subscribe, user=user,
+                                          author=author)
+        the_subscribe.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False)
     def subscribtion(self, request):
@@ -133,7 +132,7 @@ class RecipeViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def download_shopping_cart(self, request):
-        ingredients = RecipeIngredients.objects.filter(
+        ingredients = RecipeIngredient.objects.filter(
             recipe__shoppingcart__user=request.user
         ).order_by('ingredient__name').values(
             'ingredient__name', 'ingredient__measurement_unit'
