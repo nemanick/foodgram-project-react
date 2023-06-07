@@ -1,3 +1,4 @@
+gunicorn==20.0.4
 Django==3.2.19
 django-extra-fields==3.0.2
 django-filter==23.2
