@@ -1,7 +1,9 @@
 name: Django-app workflow
 
 on:
-  [push]
+  push:
+    paths-ignore:
+      - '**/README.md'
 
 jobs:
   tests:
