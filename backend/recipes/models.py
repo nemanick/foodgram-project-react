@@ -1,7 +1,6 @@
-from django.db import models
-from django.core.validators import RegexValidator, MinValueValidator
 from django.contrib.auth import get_user_model
-
+from django.core.validators import MinValueValidator, RegexValidator
+from django.db import models
 
 MIN_NUMBER = 1
 
@@ -12,10 +11,11 @@ class Tag(models.Model):
     name = models.CharField('Название', max_length=200, unique=True)
     color = models.CharField('Цвет', max_length=7, unique=True,
                              validators=[
-                                RegexValidator(
-                                    regex='^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',
-                                    message='Ошибка в HEX коде цвета',
-                                )
+                                 RegexValidator(
+                                     regex=('^#([A-Fa-f0-9]{6}|'
+                                            '[A-Fa-f0-9]{3})$'),
+                                     message='Ошибка в HEX коде цвета',
+                                 )
                              ])
     slug = models.SlugField(max_length=200, unique=True,
                             validators=[
@@ -62,8 +62,7 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(Tag)
     cooking_time = models.IntegerField('Время приготовления в мин.',
                                        validators=[
-                                           MinValueValidator(MIN_NUMBER)
-                                           ])
+                                           MinValueValidator(MIN_NUMBER)])
 
     class Meta:
         ordering = ('name',)

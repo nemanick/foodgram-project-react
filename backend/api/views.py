@@ -1,25 +1,24 @@
-from django.db.models import Sum
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
+from users.models import Subscribe
+from recipes.models import (Favorite, Recipe, RecipeIngredient,
+                            ShoppingCart, Ingredient, Tag)
+from .filters import AuthorAndTagFilter
+from .paginations import LimitPageNumberPagination
+from .permissions import IsAuthorOrReadOnly
 from .serializers import (SubscribeSerializer, TagSerializer,
                           IngredientSerializer, CustomUserSerializer,
                           CustomUserCreateSerializer, RecipeReadSerializer,
                           RecipeSerializer, ShoppingCartSerializer,
                           FavoriteSerializer)
-from .permissions import IsAuthorOrReadOnly
-from .filters import AuthorAndTagFilter
-from .paginations import LimitPageNumberPagination
-from users.models import Subscribe
-from recipes.models import (Tag, Ingredient, Recipe,
-                            Favorite, ShoppingCart, RecipeIngredient)
-
 
 User = get_user_model()
 
@@ -100,9 +99,8 @@ class RecipeViewSet(ModelViewSet):
         if model_instance.exists():
             model_instance.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response({
-                'error': 'Такого рецепта нет в списке.'
-            }, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Такого рецепта нет в списке.'
+                         }, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['POST', 'DELETE'])
     def favorite(self, request, pk):

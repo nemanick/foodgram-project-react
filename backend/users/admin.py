@@ -1,6 +1,5 @@
 from django.contrib import admin
-
-from users.models import Subscribe, CustomUser
+from users.models import CustomUser, Subscribe
 
 
 class CustomUserAdmin(admin.ModelAdmin):

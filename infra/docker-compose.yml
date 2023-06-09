@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 services:
   db:
     image: postgres:13.0-alpine
@@ -19,7 +19,7 @@ services:
       - ./.env
 
   frontend:
-    image: diablik666/foodgram-frontend
+    image: nemanick/foodgram-frontend
     volumes:
       - frontend_value:/app/build/
 
