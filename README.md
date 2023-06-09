@@ -12,7 +12,7 @@ Python, Django, Docker, Gunicorn, NGINX, PostgreSQL, Yandex Cloud.
 ```
 https://github.com/nemanick/foodgram-project-react.git
 ```
-- В директории проекта создать виртуальное окружение и установить зависимости:
+- В директории проекта создать виртуальное окружение и установить sdзависимости:
 ```
 python -m venv venv
 ```
