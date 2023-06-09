@@ -8,7 +8,7 @@ Python, Django, Docker, Gunicorn, NGINX, PostgreSQL, Yandex Cloud.
 
 ### Для запуска проект необходимо:
 
-- Клонировать репозиторий:
+- Клонировать репозиторий:d
 ```
 https://github.com/nemanick/foodgram-project-react.git
 ```
