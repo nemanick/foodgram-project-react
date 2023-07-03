@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from users.models import Subscribe
 
-from .filters import AuthorAndTagFilter
+from .filters import AuthorAndTagFilter, IngredientSearchFilter
 from .paginations import LimitPageNumberPagination
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (CustomUserCreateSerializer, CustomUserSerializer,
@@ -39,11 +39,18 @@ class CustomUserViewSet(UserViewSet):
         author = get_object_or_404(User, id=id)
 
         if request.method == 'POST':
-            serializer = SubscribeSerializer(author, context={
+            if user == author:
+                return Response({
+                    'errors': 'Вы не можете подписываться на самого себя'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            if Subscribe.objects.filter(user=user, author=author).exists():
+                return Response({
+                    'errors': 'Вы уже подписаны на данного пользователя'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            follow = Subscribe.objects.create(user=user, author=author)
+            serializer = SubscribeSerializer(follow, context={
                 'request': request
-            }, data=request.data)
-            serializer.is_valid()
-            Subscribe.objects.create(user=user, author=author)
+            })
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         the_subscribe = get_object_or_404(Subscribe, user=user,
@@ -52,13 +59,14 @@ class CustomUserViewSet(UserViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False)
-    def subscribtion(self, request):
+    def subscriptions(self, request):
         user = request.user
         queryset = Subscribe.objects.filter(user=user)
-        serializer = SubscribeSerializer(queryset, context={
+        pages = self.paginate_queryset(queryset)
+        serializer = SubscribeSerializer(pages, context={
             'request': request,
         }, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return self.get_paginated_response(serializer.data)
 
 
 class TagViewSet(ReadOnlyModelViewSet):
@@ -69,13 +77,15 @@ class TagViewSet(ReadOnlyModelViewSet):
 class IngredientViewSet(ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+    filter_backends = (IngredientSearchFilter,)
+    search_fields = ('^name',)
 
 
 class RecipeViewSet(ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = [IsAuthorOrReadOnly]
-    filter_class = AuthorAndTagFilter
+    filterset_class = AuthorAndTagFilter
     pagination_class = LimitPageNumberPagination
 
     def perform_create(self, serializer):
@@ -135,4 +145,7 @@ class RecipeViewSet(ModelViewSet):
         ).order_by('ingredient__name').values(
             'ingredient__name', 'ingredient__measurement_unit'
         ).annotate(ingredient_value=Sum('amount'))
+        if len(ingredients) == 0:
+            return Response({'error': 'Список покупок пуст'
+                             }, status=status.HTTP_400_BAD_REQUEST)
         return self.create_shopping_cart(ingredients)

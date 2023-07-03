@@ -69,16 +69,19 @@ class SubscribeSerializer(ModelSerializer):
                   'recipes_count')
 
     def get_is_subscribed(self, obj):
-        return Subscribe.objects.filter(user=obj.user,
-                                        author=obj.author).exists()
+        request = self.context.get('request')
+        if request.user.is_anonymous:
+            return False
+        return Subscribe.objects.filter(user=request.user,
+                                        author=obj.author.id).exists()
 
     def get_recipes_count(self, obj):
-        return Recipe.objects.filter(author=obj.author).count()
+        return Recipe.objects.filter(author=obj.id).count()
 
     def get_recipes(self, obj):
         request = self.context.get('request')
         limit = request.GET.get('recipes_limit')
-        queryset = Recipe.objects.filter(author=obj.author)
+        queryset = Recipe.objects.filter(author=obj.author.id)
         if limit:
             queryset = queryset[:int(limit)]
         return RecipeShortShowSerializer(queryset, many=True).data
@@ -197,11 +200,11 @@ class RecipeSerializer(ModelSerializer):
 
     def update(self, instance, validate_data):
         tags = validate_data.pop('tags')
-        ingredietns = validate_data.pop('ingredient')
+        ingredietns = validate_data.pop('ingredients')
         instance.tags.clear()
         RecipeIngredient.objects.filter(recipe=instance).delete()
         instance.tags.set(tags)
-        self.create_ingrenfients_for_recipe(instance, ingredietns)
+        self.create_ingrendients_for_recipe(instance, ingredietns)
         return super().update(instance, validate_data)
 
     def to_representation(self, instance):
