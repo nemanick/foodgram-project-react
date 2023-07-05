@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 - Выполнить миграции:
 ```
-python backends/manage.py migrate dfdfsfsdssfd
+python backends/manage.py migrate dfdfsfsds
 ```
 
 ### Работа с api
