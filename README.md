@@ -20,7 +20,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-- Выполнить миграции:
+- Выполнить миграции:а
 ```
 python backends/manage.py migrate
 ```
