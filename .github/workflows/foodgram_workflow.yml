@@ -61,9 +61,10 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
               sudo systemctl stop nginx 
+              sudo systemctl stop gunicorn
+              cd infra/
               sudo rm .env
               sudo touch .env
-              sudo chmod 666 .env
 
               echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
               echo DB_NAME=${{ secrets.DB_NAME }} >> .env
