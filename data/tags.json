@@ -1,0 +1,7 @@
+[
+    {"name": "Завтрак", "color": "#fef086", "slug": "breakfast"},
+    {"name": "Итальянская кухня", "color": "#009246", "slug": "italian"},
+    {"name": "Мучное", "color": "#f5deb3", "slug": "flourly"},
+    {"name": "Супы", "color": "#19DB69", "slug": "soups"},
+    {"name": "Салаты", "color": "#ce2b37", "slug": "salats"}
+]
