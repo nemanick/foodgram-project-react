@@ -66,6 +66,13 @@ sudo docker-compose exec backend python manage.py createsuperuser
 
 ### Готовый проект можно посмотреть по [адресу](http://158.160.38.16/recipes).
 
+- Данные админки:
+```
+Логин: admin
+Email: admin@admin.com
+Пароль: beelainpro2
+```
+
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/) [![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
 [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/)
