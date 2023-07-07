@@ -43,7 +43,7 @@ jobs:
           with:
             context: ./backend
             push: true
-            tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:1.1
+            tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-backend
 
     deploy:
       name: Deploying on remote server
