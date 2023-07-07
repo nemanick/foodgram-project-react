@@ -62,7 +62,7 @@ sudo docker-compose exec backend python manage.py load_data
 ```
 sudo docker-compose exec backend python manage.py createsuperuser
 ```
-Проект будет доступен по вашему IP.
+Проект будет доступен по открытому IP вашего сервера.
 
 ### Готовый проект можно посмотреть по [адресу](http://158.160.38.16/recipes):
 
