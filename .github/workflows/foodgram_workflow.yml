@@ -77,9 +77,9 @@ jobs:
               sudo docker-compose stop
               sudo docker-compose rm backend
               sudo docker pull backend
+              sudo docker-compose up -d --build
               sudo docker-compose exec -T backend python manage.py collectstatic --no-input
               sudo docker-compose exec backend makemigrations users
               sudo docker-compose exec backend makemigrations recipes
               sudo docker-compose exec backend migrate users
               sudo docker-compose exec backend migrate recipes
-              sudo docker-compose up -d --build
