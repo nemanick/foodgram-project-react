@@ -21,7 +21,7 @@ sudo apt install docker.io
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-- Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
+- Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP.
 - Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
 ```
 scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
@@ -42,7 +42,7 @@ SECRET_KEY=<секретный ключ проекта django>
 sudo docker-compose up -d --build 
 ```
 ### Настройка бекенда:
-Для корректной работы беккнад необходимо выполнить следующие операции:
+Для корректной работы бекенда необходимо выполнить следующие операции:
 - Выполнить миграции для приложений users и recipes:
 ```
 sudo docker-compose exec backend python manage.py makemigrations users
@@ -64,7 +64,7 @@ sudo docker-compose exec backend python manage.py createsuperuser
 ```
 Проект будет доступен по открытому IP вашего сервера.
 
-### Готовый проект можно посмотреть по [адресу](http://158.160.38.16/recipes):
+### Готовый проект можно посмотреть по [адресу](http://158.160.38.16/recipes).
 
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/) [![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
