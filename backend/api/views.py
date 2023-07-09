@@ -3,13 +3,10 @@ from django.db.models import Sum
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
-from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
-                            ShoppingCart, Tag)
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from users.models import Subscribe
 
 from .filters import AuthorAndTagFilter, IngredientSearchFilter
 from .paginations import LimitPageNumberPagination
@@ -19,6 +16,9 @@ from .serializers import (CustomUserCreateSerializer, CustomUserSerializer,
                           RecipeReadSerializer, RecipeSerializer,
                           ShoppingCartSerializer, SubscribeSerializer,
                           TagSerializer)
+from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
+                            ShoppingCart, Tag)
+from users.models import Subscribe
 
 User = get_user_model()
 
